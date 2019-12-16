@@ -1,7 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DeveloperJdbcDemo {
 //    http://www.javenue.info/post/java-jdbc-api
@@ -30,5 +27,30 @@ public class DeveloperJdbcDemo {
         System.out.println("Executing statement...");
 
         statement = connection.createStatement();
+
+        String sql = "select * from developers";
+
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        System.out.println("retrieving data from sql");
+
+        System.out.println("\n Developers: ");
+        while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            String name = resultSet.getString("name");
+            String speciality = resultSet.getString("speciality");
+            int salary = resultSet.getInt("salary");
+
+            System.out.println("\n================\n");
+            System.out.println("id: " + id);
+            System.out.println("Name: " + name);
+            System.out.println("Specialty: " + speciality);
+            System.out.println("Salary: $" + salary);
+        }
+        System.out.println("Closing connection...");
+
+        resultSet.close();
+        statement.close();
+        connection.close();
     }
 }
